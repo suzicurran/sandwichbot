@@ -1,2 +1,3 @@
-http request for @mentions
-save last @mention id in key file
+- set up responses as replies
+- reformat reply to be “The (username) - etc.”
+- start saving user ids to avoid double-dipping

@@ -1,4 +1,4 @@
-last_key = File.read("last_key.txt")
-puts last_key
-new_key = "James"
-File.write("last_key.txt", new_key)
+last_id = File.read("last_id.txt")
+puts last_id
+new_id = "James"
+File.write("last_id.txt", new_id)
