@@ -1,3 +1,4 @@
 - set up responses as replies
 - reformat reply to be “The (username) - etc.”
 - start saving user ids to avoid double-dipping
+- find out max characters in username for <140 checks

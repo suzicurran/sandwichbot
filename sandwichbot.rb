@@ -3,6 +3,7 @@ require 'oauth'
 require 'json'
 require 'csv'
 require './TwitterAPIKeys.rb'
+require 'pry'
 include TwitterAPIKeys
 
 @ingredients = CSV.read("ingredients_import.csv")
@@ -57,13 +58,13 @@ def process_sandwich_requests(incoming_tweets)
 	      tweet_text = x["text"]
 	      puts tweet_text
 	      tweet_text.downcase!
-	      if tweet_text.include? "@suzicurran make me a sandwich"
+	      if tweet_text.include? "@suzicurran" && tweet_text.include? "make me a sandwich"
 		    	puts "^ dumb request with an id of #{x["id"]} found from #{x["user"]["screen_name"]}"
 		    	@tweet_to_post = "@#{x["user"]["screen_name"]} What? Make it yourself."
 		    	craft_tweet
 		    	send_to_twitter(@tweet_address, @tweet_request)
 		    	process_post_response
-	    	elsif tweet_text.include? "@suzicurran sudo make me a sandwich"
+	    	elsif tweet_text.include? "@suzicurran" && tweet_text.include? "sudo make me a sandwich"
 		    	puts "^ smart request with an id of #{x["id"]} found from #{x["user"]["screen_name"]}"
 		    	craft_sandwich
 		    	@tweet_to_post = "@#{x["user"]["screen_name"]} Okay! Enjoy #{@sandwich}."
@@ -82,7 +83,7 @@ end
 
 def process_check_response
 	@incoming_tweets = nil
-	if @response.code == '200' then
+	if success? then
 	  @incoming_tweets = JSON.parse(@response.body)
 	 else
 	  puts "Could not get mentions! " +
@@ -92,7 +93,7 @@ end
 
 def process_post_response
 	outgoing_tweet = nil
-	if @response.code == '200' then
+	if success? then
 	  outgoing_tweet = JSON.parse(@response.body)
 	  puts "Successfully sent #{outgoing_tweet["text"]}"
 	else
@@ -101,6 +102,11 @@ def process_post_response
 	end
 end
 
+def success?
+	@response.code == '200'
+end
+
+binding.pry
 craft_check
 send_to_twitter(@check_address, @check_request)
 process_check_response
