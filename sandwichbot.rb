@@ -59,16 +59,16 @@ def process_sandwich_requests(incoming_tweets)
 	      tweet_text = x["text"]
 	      puts tweet_text
 	      tweet_text.downcase!
-	      if (tweet_text.include? "@suzicurran") && (tweet_text.include? "make me a sandwich")
-		    	puts "^ dumb request with an id of #{x["id"]} found from #{x["user"]["screen_name"]}"
-		    	@tweet_to_post = "@#{x["user"]["screen_name"]} What? Make it yourself."
-		    	craft_tweet
-		    	send_to_twitter(@tweet_address, @tweet_request)
-		    	process_post_response
-	    	elsif (tweet_text.include? "@suzicurran") && (tweet_text.include? "sudo make me a sandwich")
+	    	if (tweet_text.include? "@suzicurran") && (tweet_text.include? "sudo make me a sandwich")
 		    	puts "^ smart request with an id of #{x["id"]} found from #{x["user"]["screen_name"]}"
 		    	craft_sandwich
 		    	@tweet_to_post = "@#{x["user"]["screen_name"]} Okay! Enjoy #{@sandwich}."
+		    	craft_tweet
+		    	send_to_twitter(@tweet_address, @tweet_request)
+		    	process_post_response
+				elsif (tweet_text.include? "@suzicurran") && (tweet_text.include? "make me a sandwich")
+		    	puts "^ dumb request with an id of #{x["id"]} found from #{x["user"]["screen_name"]}"
+		    	@tweet_to_post = "@#{x["user"]["screen_name"]} What? Make it yourself."
 		    	craft_tweet
 		    	send_to_twitter(@tweet_address, @tweet_request)
 		    	process_post_response
