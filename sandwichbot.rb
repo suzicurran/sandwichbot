@@ -17,7 +17,7 @@ def craft_sandwich
 	bread = @ingredients[3].sample
 	@sandwich = "#{primary} and #{secondary} with #{condiment} on #{bread}"
 end
-
+binding.pry
 def craft_tweet
 	baseurl = "https://api.twitter.com"
 	path    = "/1.1/statuses/update.json"
